@@ -15,6 +15,13 @@
       <h2>{{ recipe.title }}</h2>
       <h4>{{ recipe.chef }}</h4>
       <p>{{ recipe.ingredients }}</p>
+      <div>
+        Updated title: <input type="text" v-model="updatedTitle">
+        <button v-on:click="updateRecipe(recipe)">Update recipe title</button>
+      </div>
+      <div>
+        <button v-on:click="deleteRecipe(recipe)">Delete recipe</button>
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +42,8 @@ export default {
       ingredients: "",
       directions: "",
       prep_time: "",
-      image_url: ""
+      image_url: "",
+      updatedTitle: ""
     };
   },
   created: function() {
@@ -62,6 +70,29 @@ export default {
           this.recipes.push(response.data);
         }.bind(this)
       );
+    },
+    updateRecipe: function(inputRecipe) {
+      console.log(this.updatedTitle, inputRecipe.id);
+      var params = {
+        title: this.updatedTitle
+      };
+      axios
+        .patch("http://localhost:3000/api/v1/recipes/" + inputRecipe.id, params)
+        .then(function(response) {
+          console.log(response.data);
+          inputRecipe.title = response.data.title;
+        });
+    },
+    deleteRecipe: function(inputRecipe) {
+      axios
+        .delete("http://localhost:3000/api/v1/recipes/" + inputRecipe.id)
+        .then(
+          function(response) {
+            console.log(response.data);
+            var index = this.recipes.indexOf(inputRecipe);
+            this.recipes.splice(index, 1);
+          }.bind(this)
+        );
     }
   },
   computed: {}
