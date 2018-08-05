@@ -1,6 +1,11 @@
 <template>
   <div class="home">
     <h1>New Recipe</h1>
+    <ul>
+      <li v-for="error in errors" class="error">
+        {{ error }}
+      </li>
+    </ul>
     <div>
       title: <input type="text" v-model="title">
       chef: <input type="text" v-model="chef">
@@ -27,6 +32,9 @@
 </template>
 
 <style>
+.error {
+  color: red;
+}
 </style>
 
 <script>
@@ -43,7 +51,8 @@ export default {
       directions: "",
       prep_time: "",
       image_url: "",
-      updatedTitle: ""
+      updatedTitle: "",
+      errors: []
     };
   },
   created: function() {
@@ -56,6 +65,7 @@ export default {
   },
   methods: {
     createRecipe: function() {
+      this.errors = [];
       var params = {
         input_title: this.title,
         input_chef: this.chef,
@@ -64,12 +74,20 @@ export default {
         prep_time: this.prep_time,
         input_image_url: this.image_url
       };
-      axios.post("http://localhost:3000/api/v1/recipes", params).then(
-        function(response) {
-          console.log("the response is", response);
-          this.recipes.push(response.data);
-        }.bind(this)
-      );
+      axios
+        .post("http://localhost:3000/api/v1/recipes", params)
+        .then(
+          function(response) {
+            console.log("the response is", response);
+            this.recipes.push(response.data);
+          }.bind(this)
+        )
+        .catch(
+          function(error) {
+            console.log(error.response.data.errors);
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
     },
     updateRecipe: function(inputRecipe) {
       console.log(this.updatedTitle, inputRecipe.id);
