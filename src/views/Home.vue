@@ -56,12 +56,10 @@ export default {
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/v1/recipes").then(
-      function(response) {
-        console.log(response);
-        this.recipes = response.data;
-      }.bind(this)
-    );
+    axios.get("http://localhost:3000/api/v1/recipes").then(response => {
+      console.log(response);
+      this.recipes = response.data;
+    });
   },
   methods: {
     createRecipe: function() {
@@ -76,18 +74,14 @@ export default {
       };
       axios
         .post("http://localhost:3000/api/v1/recipes", params)
-        .then(
-          function(response) {
-            console.log("the response is", response);
-            this.recipes.push(response.data);
-          }.bind(this)
-        )
-        .catch(
-          function(error) {
-            console.log(error.response.data.errors);
-            this.errors = error.response.data.errors;
-          }.bind(this)
-        );
+        .then(response => {
+          console.log("the response is", response);
+          this.recipes.push(response.data);
+        })
+        .catch(error => {
+          console.log(error.response.data.errors);
+          this.errors = error.response.data.errors;
+        });
     },
     updateRecipe: function(inputRecipe) {
       console.log(this.updatedTitle, inputRecipe.id);
@@ -96,7 +90,7 @@ export default {
       };
       axios
         .patch("http://localhost:3000/api/v1/recipes/" + inputRecipe.id, params)
-        .then(function(response) {
+        .then(response => {
           console.log(response.data);
           inputRecipe.title = response.data.title;
         });
@@ -104,13 +98,11 @@ export default {
     deleteRecipe: function(inputRecipe) {
       axios
         .delete("http://localhost:3000/api/v1/recipes/" + inputRecipe.id)
-        .then(
-          function(response) {
-            console.log(response.data);
-            var index = this.recipes.indexOf(inputRecipe);
-            this.recipes.splice(index, 1);
-          }.bind(this)
-        );
+        .then(response => {
+          console.log(response.data);
+          var index = this.recipes.indexOf(inputRecipe);
+          this.recipes.splice(index, 1);
+        });
     }
   },
   computed: {}
