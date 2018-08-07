@@ -20,6 +20,8 @@
       <h2>{{ recipe.title }}</h2>
       <h4>{{ recipe.chef }}</h4>
       <p>{{ recipe.ingredients }}</p>
+      <p>{{ recipe.image }}</p>
+      <img v-bind:src="recipe.image" alt="" width="200">
       <div>
         Updated title: <input type="text" v-model="updatedTitle">
         <button v-on:click="updateRecipe(recipe)">Update recipe title</button>
