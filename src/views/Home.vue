@@ -29,6 +29,9 @@
       <div>
         <button v-on:click="deleteRecipe(recipe)">Delete recipe</button>
       </div>
+      <div>
+        <a v-bind:href=" '/#/recipes/' + recipe.id ">More info</a>
+      </div>
     </div>
   </div>
 </template>
