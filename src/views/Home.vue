@@ -16,17 +16,21 @@
       <button v-on:click="createRecipe()">Create recipe</button>
     </div>
     <h1>Recipes</h1>
+    <div>
+      <button v-on:click="setSortAttribute('title')">Sort by title</button>
+      <button v-on:click="setSortAttribute('chef')">Sort by chef</button>
+    </div>
     Search: <input type="text" v-model="searchFilter" list="titles">
     <datalist id="titles">
       <option v-for="recipe in recipes">{{ recipe.title }}</option>
     </datalist>
     <div class="row">
-      <div class="col-md-4" v-for="recipe in filterBy(recipes, searchFilter, 'title', 'ingredients')">
+      <div class="col-md-4" v-for="recipe in orderBy(recipes, sortAttribute)">
 
         <div class="card">
           <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">{{ recipe.title }}</h5>
+            <h5 class="card-title">{{ recipe.title }} - {{ recipe.chef }}</h5>
             <p class="card-text">
               Ingredients: {{ recipe.ingredients }}
               Directions: {{ recipe.directions}}
@@ -90,6 +94,7 @@ export default {
       updatedTitle: "",
       currentRecipe: {},
       searchFilter: "",
+      sortAttribute: "title",
       errors: []
     };
   },
@@ -141,6 +146,9 @@ export default {
           var index = this.recipes.indexOf(inputRecipe);
           this.recipes.splice(index, 1);
         });
+    },
+    setSortAttribute: function(inputAttribute) {
+      this.sortAttribute = inputAttribute;
     }
   },
   computed: {}
