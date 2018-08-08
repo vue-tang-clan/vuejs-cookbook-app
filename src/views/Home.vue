@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home container">
     <h1>New Recipe</h1>
     <ul>
       <li v-for="error in errors" class="error">
@@ -16,34 +16,28 @@
       <button v-on:click="createRecipe()">Create recipe</button>
     </div>
     <h1>Recipes</h1>
-    <div v-for="recipe in recipes">
-      <h2>{{ recipe.title }}</h2>
-      <h4>{{ recipe.chef }}</h4>
-      <p>{{ recipe.ingredients }}</p>
-      <p>{{ recipe.image }}</p>
-      <img v-bind:src="recipe.image" alt="" width="200">
-      <div>
-        Updated title: <input type="text" v-model="updatedTitle">
-        <button v-on:click="updateRecipe(recipe)">Update recipe title</button>
-      </div>
-      <div>
-        <button v-on:click="deleteRecipe(recipe)">Delete recipe</button>
-      </div>
-      <div>
-        <a v-bind:href=" '/#/recipes/' + recipe.id ">More info</a>
+    <div class="row">
+      <div class="col-md-4" v-for="recipe in recipes">
 
+        <div class="card">
+          <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text">
+              Ingredients: {{ recipe.ingredients }}
+              Directions: {{ recipe.directions}}
+            </p>
+            <a v-bind:href=" '/#/recipes/' + recipe.id "class="btn btn-primary">More info</a>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" v-on:click="currentRecipe = recipe">
-          Launch demo modal
-        </button>
-
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" v-on:click="currentRecipe = recipe">
+              modal
+            </button>
+          </div>
+        </div>
 
       </div>
     </div>
-
-
-
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,7 +59,6 @@
         </div>
       </div>
     </div>
-
 
   </div>
 </template>
