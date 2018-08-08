@@ -42,4 +42,8 @@
 </template>
 
 <style>
+body {
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  background-image: url("./assets/purty_wood.png");
+}
 </style>
