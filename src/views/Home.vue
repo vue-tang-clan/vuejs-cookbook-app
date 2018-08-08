@@ -16,8 +16,9 @@
       <button v-on:click="createRecipe()">Create recipe</button>
     </div>
     <h1>Recipes</h1>
+    Search: <input type="text" v-model="searchFilter">
     <div class="row">
-      <div class="col-md-4" v-for="recipe in recipes">
+      <div class="col-md-4" v-for="recipe in filterBy(recipes, searchFilter, 'title', 'ingredients')">
 
         <div class="card">
           <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
@@ -85,6 +86,7 @@ export default {
       image_url: "",
       updatedTitle: "",
       currentRecipe: {},
+      searchFilter: "",
       errors: []
     };
   },
