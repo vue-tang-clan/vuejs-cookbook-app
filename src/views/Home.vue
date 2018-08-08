@@ -24,27 +24,27 @@
     <datalist id="titles">
       <option v-for="recipe in recipes">{{ recipe.title }}</option>
     </datalist>
-    <div class="row">
-      <div class="col-md-4" v-for="recipe in orderBy(filterBy(recipes, searchFilter, 'title'), sortAttribute, sortOrder)">
+    <div class="row" is="transition-group" name="fade">
+        <div class="col-md-4" v-for="recipe in orderBy(filterBy(recipes, searchFilter, 'title'), sortAttribute, sortOrder)" v-bind:key="recipe.id">
 
-        <div class="card">
-          <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">{{ recipe.title }} - {{ recipe.chef }}</h5>
-            <p class="card-text">
-              Ingredients: {{ recipe.ingredients }}
-              Directions: {{ recipe.directions}}
-            </p>
-            <a v-bind:href=" '/#/recipes/' + recipe.id "class="btn btn-primary">More info</a>
+          <div class="card">
+            <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.title }} - {{ recipe.chef }}</h5>
+              <p class="card-text">
+                Ingredients: {{ recipe.ingredients }}
+                Directions: {{ recipe.directions}}
+              </p>
+              <a v-bind:href=" '/#/recipes/' + recipe.id "class="btn btn-primary">More info</a>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" v-on:click="currentRecipe = recipe">
-              modal
-            </button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" v-on:click="currentRecipe = recipe">
+                modal
+              </button>
+            </div>
           </div>
-        </div>
 
-      </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -74,6 +74,15 @@
 <style>
 .error {
   color: red;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 
