@@ -25,7 +25,7 @@
       <option v-for="recipe in recipes">{{ recipe.title }}</option>
     </datalist>
     <div class="row">
-      <div class="col-md-4" v-for="recipe in orderBy(recipes, sortAttribute)">
+      <div class="col-md-4" v-for="recipe in orderBy(filterBy(recipes, searchFilter, 'title'), sortAttribute)">
 
         <div class="card">
           <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
