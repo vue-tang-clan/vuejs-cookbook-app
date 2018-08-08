@@ -25,7 +25,7 @@
       <option v-for="recipe in recipes">{{ recipe.title }}</option>
     </datalist>
     <div class="row">
-      <div class="col-md-4" v-for="recipe in orderBy(filterBy(recipes, searchFilter, 'title'), sortAttribute)">
+      <div class="col-md-4" v-for="recipe in orderBy(filterBy(recipes, searchFilter, 'title'), sortAttribute, sortOrder)">
 
         <div class="card">
           <img class="card-img-top" v-bind:src="recipe.image" alt="Card image cap">
@@ -95,6 +95,7 @@ export default {
       currentRecipe: {},
       searchFilter: "",
       sortAttribute: "title",
+      sortOrder: 1,
       errors: []
     };
   },
@@ -148,6 +149,12 @@ export default {
         });
     },
     setSortAttribute: function(inputAttribute) {
+      // if (this.sortOrder === 1) {
+      //   this.sortOrder = -1;
+      // } else {
+      //   this.sortOrder = 1;
+      // }
+      this.sortOrder = this.sortOrder === 1 ? -1 : 1;
       this.sortAttribute = inputAttribute;
     }
   },
